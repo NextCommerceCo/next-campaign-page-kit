@@ -4,6 +4,7 @@
   "description": "Static site generator for Next Commerce campaigns.",
   "main": "index.js",
   "bin": {
+    "campaign-init": "./lib/campaign-init.js",
     "campaign-dev": "./lib/dev-server.js",
     "campaign-clone": "./lib/campaign-clone.js",
     "campaign-config": "./lib/campaign-configure.js"
