@@ -81,7 +81,7 @@ npm run config
 ```
 
 > [!IMPORTANT]
-> Get your Campaign API key from the Campaigns App in your store. See [Campaigns App Guide](https://docs.next-commerce.com/campaigns-app/introduction).
+> Get your Campaign API key from the Campaigns App in your store. See [Campaigns App Guide](https://developers.nextcommerce.com/docs/campaigns/).
 
 ### 8. Start the development server
 
