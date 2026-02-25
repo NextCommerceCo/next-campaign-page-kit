@@ -1,0 +1,30 @@
+{
+  "name": "next-campaign-page-kit",
+  "version": "0.0.1",
+  "description": "Static site generator for Next Commerce campaigns.",
+  "main": "index.js",
+  "bin": {
+    "campaign-dev": "./lib/dev-server.js",
+    "campaign-clone": "./lib/campaign-clone.js",
+    "campaign-config": "./lib/campaign-configure.js"
+  },
+  "files": [
+    "index.js",
+    "lib/"
+  ],
+  "keywords": [
+    "next-commerce",
+    "campaign",
+    "eleventy",
+    "checkout"
+  ],
+  "author": "Next Commerce",
+  "license": "MIT",
+  "type": "commonjs",
+  "peerDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}
