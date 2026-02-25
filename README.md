@@ -2,32 +2,52 @@
 
 Eleventy plugin and CLI tools for building Next Commerce campaign funnels. Provides a customized 11ty static site generator tailored for multi-page campaign flows (presale, checkout, upsell, receipt).
 
-## Setup
+## Getting Started
 
-### Installation
-
-```bash
-npm install next-campaign-page-kit --save-dev
-```
-
-Add `@11ty/eleventy` as a peer dependency if not already installed:
+### 1. Create a project directory
 
 ```bash
-npm install @11ty/eleventy --save-dev
+mkdir my-campaign && cd my-campaign
 ```
 
-### Configure Eleventy
+### 2. Create a `package.json`
 
-Create `.eleventy.js` in your project root:
-
-```javascript
-const { createEleventyConfig } = require('next-campaign-page-kit');
-module.exports = createEleventyConfig;
+```json
+{
+  "name": "my-campaign",
+  "version": "1.0.0",
+  "scripts": {
+    "init": "campaign-init",
+    "start": "campaign-dev",
+    "dev": "campaign-dev",
+    "build": "eleventy",
+    "clone": "campaign-clone",
+    "config": "campaign-config"
+  },
+  "dependencies": {
+    "next-campaign-page-kit": "github:NextCommerceCo/next-campaign-page-kit",
+    "@11ty/eleventy": "^3.1.2"
+  }
+}
 ```
 
-### Campaign Registry
+### 3. Install dependencies
 
-Create `_data/campaigns.json`:
+```bash
+npm install
+```
+
+### 4. Run the init script
+
+```bash
+npm run init
+```
+
+This will create:
+- `.eleventy.js` — Eleventy config wired up to this package
+- `_data/campaigns.json` — empty campaign registry to get you started
+
+### 5. Add your first campaign to `_data/campaigns.json`
 
 ```json
 {
@@ -42,23 +62,31 @@ Create `_data/campaigns.json`:
 }
 ```
 
-### Development
+### 6. Create your campaign files
 
-Start the development server with interactive campaign selection:
-
-```bash
-npx campaign-dev
+```
+src/
+└── my-campaign/
+    ├── _layouts/
+    │   └── base.html
+    ├── assets/
+    │   └── config.js
+    └── presale.html
 ```
 
-Or add to your `package.json` scripts:
+### 7. Set your Campaign API key
 
-```json
-"scripts": {
-  "start": "campaign-dev",
-  "build": "eleventy",
-  "clone": "campaign-clone",
-  "config": "campaign-config"
-}
+```bash
+npm run config
+```
+
+> [!IMPORTANT]
+> Get your Campaign API key from the Campaigns App in your store. See [Campaigns App Guide](https://docs.next-commerce.com/campaigns-app/introduction).
+
+### 8. Start the development server
+
+```bash
+npm run dev
 ```
 
 This will:
@@ -67,33 +95,25 @@ This will:
 3. Start the 11ty development server
 4. Open your browser to the selected campaign
 
+---
+
+## Commands
+
+| Command | Description |
+|---|---|
+| `npm run init` | Scaffold `.eleventy.js` and `_data/campaigns.json` |
+| `npm run dev` | Start dev server with interactive campaign picker |
+| `npm run build` | Build all campaigns to `_site/` |
+| `npm run clone` | Clone an existing campaign to a new slug |
+| `npm run config` | Set the API key for a campaign |
+
 ### Build
 
-Build the static site for production:
+Output will be in the `_site` directory:
 
 ```bash
 npm run build
 ```
-
-Output will be in the `_site` directory.
-
-### Configuration
-
-Configure a campaign's API key:
-
-```bash
-npm run config
-```
-
-This interactive tool will:
-1. Show available campaigns
-2. Prompt for campaign selection
-3. Prompt for API key
-4. Update the campaign's `config.js` file
-
-> [!IMPORTANT]
-> Get your Campaign API key from Campaigns App in your store. See [Campaigns App Guide](https://docs.next-commerce.com/campaigns-app/introduction).
-
 
 ### Clone Campaign
 
