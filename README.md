@@ -373,7 +373,7 @@ Example output:
 
 ```
 ✅ Found 2 images with potential compression savings.
-⏭️  Found 1 image already fully compressed.
+⏭️ Found 1 image already fully compressed.
 
 ------------------------------------------+----------+----------+----------+-------+----
  File                                     | Before   | After    | Saved    | %     |
