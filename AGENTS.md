@@ -69,6 +69,12 @@ You are a web development assistant specialized in:
 
 ## Build Commands
 
+### Setup (first time only)
+```bash
+npm run setup
+# Scaffolds .eleventy.js and _data/campaigns.json
+```
+
 ### Development
 ```bash
 npm run dev
@@ -84,8 +90,10 @@ npm run build
 
 ### Campaign Management
 ```bash
-npm run clone         # Clone a campaign
-npm run config        # Configure API key
+npm run clone             # Clone a campaign
+npm run config            # Configure API key
+npm run compress          # Compress images in a campaign (in-place)
+npm run compress:preview  # Preview compression savings without modifying files
 ```
 
 ## Code Style Guidelines
@@ -224,6 +232,14 @@ Base layout must include:
 3. Enter new campaign name and slug
 4. Configure API key: `npm run config`
 
+### Compressing Images
+Run before deploying to reduce image file sizes in-place:
+1. Run `npm run compress:preview` to see savings without modifying files
+2. Run `npm run compress` to apply compression
+- Supports JPEG, PNG, WebP, GIF
+- Only overwrites files where savings exceed 1 KB
+- Safe to run multiple times (already-optimized files are skipped)
+
 ### Modifying Styles
 1. Edit `src/{campaign}/assets/css/custom.css` for global styles
 2. Create page-specific CSS: `assets/css/{page}.css`
@@ -236,7 +252,7 @@ Base layout must include:
 - 11ty config: `.eleventy.js`
 - Campaign plugin: `node_modules/next-campaign-page-kit/lib/campaign-plugin.js`
 - Shared config utilities: `node_modules/next-campaign-page-kit/lib/config.js`
-- CLI tools: `node_modules/next-campaign-page-kit/lib/dev-server.js`, `campaign-clone.js`, `campaign-configure.js`
+- CLI tools: `node_modules/next-campaign-page-kit/lib/dev-server.js`, `campaign-clone.js`, `campaign-configure.js`, `campaign-compress.js`
 - Campaign files: `src/{campaign-slug}/`
 
 ## Error Handling

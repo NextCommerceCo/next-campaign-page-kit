@@ -1,6 +1,8 @@
 # Next Campaign Page Kit
 
-Eleventy plugin and CLI tools for building Next Commerce campaign funnels. Provides a customized 11ty static site generator tailored for multi-page campaign flows (presale, checkout, upsell, receipt).
+Next Campaign Page Kit is a tool for building campaign funnels that can be hosted with any of your favorite state site hosting providers such as Netlify or Cloudflare Pages. 
+
+Next Campaign Page Kit is a customized 11ty static site generator tailored for managing many unique campaigns in sub-directories for good isolation between campaigns and easy management. 
 
 ## Getting Started
 
@@ -17,15 +19,17 @@ mkdir my-campaign && cd my-campaign
   "name": "my-campaign",
   "version": "1.0.0",
   "scripts": {
-    "init": "campaign-init",
+    "setup": "campaign-init",
     "start": "campaign-dev",
     "dev": "campaign-dev",
     "build": "eleventy",
     "clone": "campaign-clone",
-    "config": "campaign-config"
+    "config": "campaign-config",
+    "compress": "campaign-compress",
+    "compress:preview": "campaign-compress --preview"
   },
   "dependencies": {
-    "next-campaign-page-kit": "github:NextCommerceCo/next-campaign-page-kit",
+    "next-campaign-page-kit": "^0.0.1",
     "@11ty/eleventy": "^3.1.2"
   }
 }
@@ -37,10 +41,10 @@ mkdir my-campaign && cd my-campaign
 npm install
 ```
 
-### 4. Run the init script
+### 4. Run the setup script
 
 ```bash
-npm run init
+npm run setup
 ```
 
 This will create:
@@ -81,7 +85,7 @@ npm run config
 ```
 
 > [!IMPORTANT]
-> Get your Campaign API key from the Campaigns App in your store. See [Campaigns App Guide](https://developers.nextcommerce.com/docs/campaigns/).
+> Get your Campaign API key from the Campaigns App in your store. See [Campaigns App Guide](https://docs.29next.com/apps/campaigns-app).
 
 ### 8. Start the development server
 
@@ -101,11 +105,13 @@ This will:
 
 | Command | Description |
 |---|---|
-| `npm run init` | Scaffold `.eleventy.js` and `_data/campaigns.json` |
+| `npm run setup` | Scaffold `.eleventy.js` and `_data/campaigns.json` |
 | `npm run dev` | Start dev server with interactive campaign picker |
 | `npm run build` | Build all campaigns to `_site/` |
 | `npm run clone` | Clone an existing campaign to a new slug |
 | `npm run config` | Set the API key for a campaign |
+| `npm run compress` | Compress all images in a campaign directory |
+| `npm run compress:preview` | Preview compression savings without modifying files |
 
 ### Build
 
@@ -133,6 +139,7 @@ your-project/
 │   └── [campaign-slug]/        # Individual campaign directory
 │       ├── _layouts/           # Campaign-specific layouts
 │       │   └── base.html       # Base layout template
+│       ├── _includes/          # Reusable campaign components
 │       ├── assets/             # Campaign assets (CSS, images, JS, config)
 │       │   ├── css/            # Campaign styles
 │       │   ├── images/         # Campaign images
@@ -156,7 +163,23 @@ your-project/
 
 ## Page Frontmatter
 
-Each campaign page uses YAML frontmatter to configure the page.
+Each campaign page uses YAML frontmatter to configure the page for context.
+
+### Page Frontmatter Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `page_layout` | string | No | Layout file in `_layouts/`. Defaults to `base.html` |
+| `title` | string | Yes | Page title for `<title>` tag |
+| `page_type` | string | Yes | Page type: `product`, `checkout`, `upsell`, `receipt` |
+| `permalink` | string | No | Custom URL path (e.g., `/starter/`) |
+| `next_success_url` | string | No | Redirect URL after successful checkout |
+| `next_upsell_accept` | string | No | URL when upsell accepted |
+| `next_upsell_decline` | string | No | URL when upsell declined |
+| `styles` | array | No | Page-specific CSS files (relative paths or external URLs) |
+| `scripts` | array | No | Page-specific JS files (relative paths or external URLs) |
+| `footer` | boolean | No | Show footer on this page |
+
 
 ### Example
 
@@ -176,20 +199,6 @@ footer: true
 ---
 ```
 
-### Frontmatter Fields
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `page_layout` | string | No | Layout file in `_layouts/`. Defaults to `base.html` |
-| `title` | string | Yes | Page title for `<title>` tag |
-| `page_type` | string | No | Page type: `product`, `checkout`, `upsell`, `receipt` |
-| `permalink` | string | No | Custom URL path (e.g., `/starter/`) |
-| `next_success_url` | string | No | Redirect URL after successful checkout |
-| `next_upsell_accept` | string | No | URL when upsell accepted |
-| `next_upsell_decline` | string | No | URL when upsell declined |
-| `styles` | array | No | Page-specific CSS files (relative paths or external URLs) |
-| `scripts` | array | No | Page-specific JS files (relative paths or external URLs) |
-| `footer` | boolean | No | Show footer on this page |
 
 ## Campaign Context (`campaign`)
 
@@ -206,7 +215,7 @@ You can access any key defined in your campaign's entry in `_data/campaigns.json
 
 ### Adding Custom Context
 
-To add more context, simply add new keys to your campaign in `_data/campaigns.json`:
+To add more context across all pages in your campaign, simply add new keys to your campaign in `_data/campaigns.json`:
 
 ```json
 {
@@ -221,7 +230,7 @@ To add more context, simply add new keys to your campaign in `_data/campaigns.js
 }
 ```
 
-Then use it in your templates:
+Then the context is available to use it in your templates:
 
 ```liquid
 <h2>{{ campaign.custom_headline }}</h2>
@@ -238,7 +247,10 @@ Layouts are automatically resolved to the campaign's `_layouts/` directory:
 
 ## Template Tags (Filters)
 
-Next Campaign Page Kit provides custom 11ty filters for campaign-agnostic paths.
+Next Campaign Page Kit provides custom liquid template filters for campaign-relative includes, assets, and links.
+
+> [!TIP]
+> Use campaign template filters to ensure your includes, assets, and links are automatically handled when cloning templates to a fresh new campaign.
 
 ### `campaign_asset`
 
@@ -336,3 +348,43 @@ For more details, see the [Campaigns App documentation](https://docs.29next.com/
 ## Test Orders
 
 You can use our [test cards](https://docs.29next.com/manage/orders/test-orders) to create test orders.
+
+## Compress Images
+
+Compress all images in a campaign directory in-place. Supports JPEG, PNG, WebP, and GIF. Only overwrites a file if the compressed output is smaller than the original.
+
+```bash
+npm run compress
+```
+
+This will:
+1. Show a list of available campaigns
+2. Let you select which campaign to compress
+3. Compress all images found anywhere in the campaign directory (`src/[campaign]/`)
+4. Print a before/after table with file sizes and total savings
+
+**Preview mode** — see what would be saved without modifying any files:
+
+```bash
+npm run compress:preview
+```
+
+Example output:
+
+```
+✅ Found 2 images with potential compression savings.
+⏭️  Found 1 image already fully compressed.
+
+------------------------------------------+----------+----------+----------+-------+----
+ File                                     | Before   | After    | Saved    | %     |
+------------------------------------------+----------+----------+----------+-------+----
+ src/my-campaign/assets/images/hero.jpg   | 245.3 KB | 148.2 KB | -97.1 KB | 39.6% | 👁️
+ src/my-campaign/assets/images/banner.webp| 180.0 KB | 121.4 KB | -58.6 KB | 32.6% | 👁️
+------------------------------------------+----------+----------+----------+-------+----
+ TOTAL                                    | 425.3 KB | 269.6 KB | -155.7 KB| 36.6% |
+------------------------------------------+----------+----------+----------+-------+----
+
+ℹ️  Preview only — run without preview to apply changes.
+```
+
+Already-optimized images are excluded from the table and counted in the summary above.
