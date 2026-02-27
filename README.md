@@ -90,7 +90,6 @@ This will:
 
 | Command | Description |
 |---|---|
-| `npm run setup` | Scaffold `.eleventy.js` and `_data/campaigns.json` |
 | `npm run dev` | Start dev server with interactive campaign picker |
 | `npm run build` | Build all campaigns to `_site/` |
 | `npm run clone` | Clone an existing campaign to a new slug |
