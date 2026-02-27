@@ -14,49 +14,27 @@ The CLI tools (`dev`, `clone`, `config`, `compress`) and template filters (`camp
 
 ### 1. Create a project directory
 
+```bash
+mkdir my-campaigns && cd my-campaigns
+```
+
+### 2. Initialize and install
 
 ```bash
-mkdir my-campaign && cd my-campaign
+npm init -y
+npm install next-campaign-page-kit @11ty/eleventy
 ```
 
-### 2. Create a `package.json`
-
-```json
-{
-  "name": "my-brand-campaigns",
-  "version": "1.0.0",
-  "scripts": {
-    "setup": "campaign-init",
-    "start": "campaign-dev",
-    "dev": "campaign-dev",
-    "build": "eleventy",
-    "clone": "campaign-clone",
-    "config": "campaign-config",
-    "compress": "campaign-compress",
-    "compress:preview": "campaign-compress --preview"
-  },
-  "dependencies": {
-    "next-campaign-page-kit": "^0.0.1",
-    "@11ty/eleventy": "^3.1.2"
-  }
-}
-```
-
-### 3. Install dependencies
+### 3. Run the setup script
 
 ```bash
-npm install
+npx campaign-init
 ```
 
-### 4. Run the setup script
-
-```bash
-npm run setup
-```
-
-This will create:
-- `.eleventy.js` — Eleventy config wired up to this package
-- `_data/campaigns.json` — empty campaign registry to get you started
+This will:
+- Add all CLI scripts to your `package.json`
+- Create `.eleventy.js` — Eleventy config wired up to this package
+- Create `_data/campaigns.json` — empty campaign registry to get you started
 
 ### 5. Add your first campaign to `_data/campaigns.json`
 
@@ -73,7 +51,7 @@ This will create:
 }
 ```
 
-### 6. Create your campaign files
+### 5. Create your campaign files
 
 ```
 src/
@@ -85,7 +63,7 @@ src/
     └── presale.html
 ```
 
-### 7. Set your Campaign API key
+### 6. Set your Campaign API key
 
 ```bash
 npm run config
@@ -94,7 +72,7 @@ npm run config
 > [!IMPORTANT]
 > Get your Campaign API key from the Campaigns App in your store. See [Campaigns App Guide](https://docs.29next.com/apps/campaigns-app).
 
-### 8. Start the development server
+### 7. Start the development server
 
 ```bash
 npm run dev
