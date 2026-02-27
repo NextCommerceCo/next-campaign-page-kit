@@ -354,19 +354,20 @@ npm run compress:preview
 Example output:
 
 ```
-✅ Found 2 images with potential compression savings.
-⏭️ Found 1 image already fully compressed.
+◇  Found 3 images
+◇  2 images ready to compress
 
-------------------------------------------+----------+----------+----------+-------+----
- File                                     | Before   | After    | Saved    | %     |
-------------------------------------------+----------+----------+----------+-------+----
- src/my-campaign/assets/images/hero.jpg   | 245.3 KB | 148.2 KB | -97.1 KB | 39.6% | 👁️
- src/my-campaign/assets/images/banner.webp| 180.0 KB | 121.4 KB | -58.6 KB | 32.6% | 👁️
-------------------------------------------+----------+----------+----------+-------+----
- TOTAL                                    | 425.3 KB | 269.6 KB | -155.7 KB| 36.6% |
-------------------------------------------+----------+----------+----------+-------+----
+--------------------------------------------+----------+----------+----------+-------+---------
+ File                                       | Before   | After    | Saved    | %     | Status
+--------------------------------------------+----------+----------+----------+-------+---------
+ src/my-campaign/assets/images/hero.jpg     | 145.3 KB | 88.2 KB  | -57.1 KB | 39.3% | preview
+ src/my-campaign/assets/images/product.png  | 80.0 KB  | 54.0 KB  | -26.0 KB | 32.5% | preview
+--------------------------------------------+----------+----------+----------+-------+---------
+ TOTAL                                      | 225.3 KB | 142.2 KB | -83.1 KB | 36.9% |
+--------------------------------------------+----------+----------+----------+-------+---------
 
-ℹ️  Preview only — run without preview to apply changes.
+[NEXT] DEBUG 1 image already fully compressed, skipped
+└  Preview complete — run without --preview to apply changes.
 ```
 
-Already-optimized images are excluded from the table and counted in the summary above.
+Already-optimized images are skipped and reported in the debug line above the summary.

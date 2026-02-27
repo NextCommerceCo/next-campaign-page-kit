@@ -1,6 +1,6 @@
 {
   "name": "next-campaign-page-kit",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Campaign site generator for Next Commerce campaigns.",
   "main": "index.js",
   "bin": {
