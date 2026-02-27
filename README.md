@@ -70,7 +70,7 @@ npm run config
 ```
 
 > [!IMPORTANT]
-> Get your Campaign API key from the Campaigns App in your store. See [Campaigns App Guide](https://docs.29next.com/apps/campaigns-app).
+> Get your Campaign API key from the Campaigns App in your store. See [Campaigns App Guide](https://developers.nextcommerce.com/docs/campaigns/#getting-started).
 
 ### 7. Start the development server
 
@@ -328,11 +328,11 @@ To connect this campaign to your 29 Next Campaigns App:
 3. Enter your API key from the Campaigns App
 4. Deploy your campaign
 
-For more details, see the [Campaigns App documentation](https://docs.29next.com/apps/campaigns-app).
+For more details, see the [Campaigns App documentation](https://developers.nextcommerce.com/docs/campaigns/#getting-started).
 
 ## Test Orders
 
-You can use our [test cards](https://docs.29next.com/manage/orders/test-orders) to create test orders.
+You can use our [test cards](https://developers.nextcommerce.com/docs/admin-api/guides/testing-guide/) to create test orders.
 
 ## Compress Images
 
