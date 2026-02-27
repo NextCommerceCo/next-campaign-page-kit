@@ -22,7 +22,7 @@ mkdir my-campaigns && cd my-campaigns
 
 ```bash
 npm init -y
-npm install next-campaign-page-kit @11ty/eleventy
+npm install next-campaign-page-kit
 ```
 
 ### 3. Run the setup script
@@ -33,10 +33,9 @@ npx campaign-init
 
 This will:
 - Add all CLI scripts to your `package.json`
-- Create `.eleventy.js` — Eleventy config wired up to this package
 - Create `_data/campaigns.json` — empty campaign registry to get you started
 
-### 5. Add your first campaign to `_data/campaigns.json`
+### 4. Add your first campaign to `_data/campaigns.json`
 
 ```json
 {
@@ -81,7 +80,7 @@ npm run dev
 This will:
 1. Show a list of available campaigns
 2. Let you select which campaign to preview
-3. Start the 11ty development server
+3. Start the dev server
 4. Open your browser to the selected campaign
 
 ---
@@ -90,6 +89,7 @@ This will:
 
 | Command | Description |
 |---|---|
+| `npm start` | Interactive menu: dev server, compress, clone, configure |
 | `npm run dev` | Start dev server with interactive campaign picker |
 | `npm run build` | Build all campaigns to `_site/` |
 | `npm run clone` | Clone an existing campaign to a new slug |
@@ -134,7 +134,6 @@ your-project/
 │       ├── upsell.html         # Upsell page
 │       ├── receipt.html        # Receipt page
 │       └── *.html              # Any other page
-├── .eleventy.js                # 11ty config (2 lines)
 └── package.json
 ```
 
@@ -143,7 +142,6 @@ your-project/
 - **`_data/campaigns.json`** - Register all campaigns and their configuration data here
 - **`src/[campaign]/_layouts/base.html`** - Campaign's base layout
 - **`src/[campaign]/assets/config.js`** - Campaign Cart SDK configuration
-- **`.eleventy.js`** - Eleventy config (uses `createEleventyConfig` from this package)
 
 ## Page Frontmatter
 
@@ -231,7 +229,7 @@ Layouts are automatically resolved to the campaign's `_layouts/` directory:
 
 ## Template Tags (Filters)
 
-Next Campaign Page Kit provides custom liquid template filters for campaign-relative includes, assets, and links.
+Templates use [Liquid](https://shopify.github.io/liquid/basics/introduction/) syntax. Next Campaign Page Kit provides additional custom filters and tags for campaign-relative includes, assets, and links.
 
 > [!TIP]
 > Use campaign template filters to ensure your includes, assets, and links are automatically handled when cloning templates to a fresh new campaign.
@@ -310,10 +308,10 @@ Includes a file relative to the current campaign's `_includes` directory. This i
 **Examples:**
 ```liquid
 <!-- Include a slider component -->
-{% campaign_include 'slider.html' images=page.slider_images %}
+{% campaign_include 'slider.html' images=slider_images %}
 
 <!-- Include with parameters -->
-{% campaign_include 'slider.html' images=page.slider_images show_package_image=true %}
+{% campaign_include 'slider.html' images=slider_images show_package_image=true %}
 ```
 
 **Use for:** Reusable components within a campaign (e.g., sliders, testimonials).
