@@ -2,11 +2,18 @@
 
 Next Campaign Page Kit is a tool for building campaign funnels that can be hosted with any of your favorite static site hosting providers such as Netlify or Cloudflare Pages. 
 
-Next Campaign Page Kit is a customized 11ty static site generator tailored for managing many unique campaigns in sub-directories for good isolation between campaigns and easy management. 
+## Motivation
+
+Most static site generators are designed around a single site. When you need to manage multiple campaign funnels in one repository, you quickly run into problems: shared layouts bleed across campaigns, assets collide, and a change to one campaign can silently break another.
+
+Next Campaign Page Kit solves this by treating each campaign as a fully isolated unit within a single repository. Every campaign lives in its own subdirectory with its own layouts, assets, and configuration — but they're all built, versioned, and deployed together.
+
+The CLI tools (`dev`, `clone`, `config`, `compress`) and template filters (`campaign_asset`, `campaign_link`, `campaign_include`) enforce this isolation at every step, so developers can work on one campaign without fear of affecting another.
 
 ## Getting Started
 
 ### 1. Create a project directory
+
 
 ```bash
 mkdir my-campaign && cd my-campaign
@@ -16,7 +23,7 @@ mkdir my-campaign && cd my-campaign
 
 ```json
 {
-  "name": "my-campaign",
+  "name": "my-brand-campaigns",
   "version": "1.0.0",
   "scripts": {
     "setup": "campaign-init",
