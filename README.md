@@ -1,6 +1,6 @@
 # Next Campaign Page Kit
 
-Next Campaign Page Kit is a tool for building campaign funnels that can be hosted with any of your favorite state site hosting providers such as Netlify or Cloudflare Pages. 
+Next Campaign Page Kit is a tool for building campaign funnels that can be hosted with any of your favorite static site hosting providers such as Netlify or Cloudflare Pages. 
 
 Next Campaign Page Kit is a customized 11ty static site generator tailored for managing many unique campaigns in sub-directories for good isolation between campaigns and easy management. 
 
